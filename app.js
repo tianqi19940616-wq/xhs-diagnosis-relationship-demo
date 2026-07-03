@@ -35,7 +35,7 @@ function drawQrCode(targetUrl) {
   image.alt = "手机扫码预览二维码";
   image.decoding = "async";
   image.loading = "eager";
-  image.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&format=svg&data=${encodeURIComponent(targetUrl)}`;
+  image.src = "./qr.png";
   if (canvas) {
     canvas.replaceWith(image);
     return;
