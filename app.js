@@ -19,7 +19,6 @@ function setupDesktopPreview() {
   const iframe = document.querySelector("[data-desktop-preview]");
   if (!iframe) return;
   const target = new URL(window.location.href);
-  target.searchParams.set("mobile", "1");
   iframe.setAttribute("src", target.toString());
   drawQrCode(target.toString());
 }
