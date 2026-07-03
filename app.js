@@ -21,42 +21,26 @@ function setupDesktopPreview() {
   const target = new URL(window.location.href);
   target.searchParams.set("mobile", "1");
   iframe.setAttribute("src", target.toString());
-  drawQrCode();
+  drawQrCode(target.toString());
 }
 
-function drawQrCode() {
+function drawQrCode(targetUrl) {
+  const box = document.querySelector(".desktop-qr-box");
   const canvas = document.querySelector(".desktop-qr-canvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const size = canvas.width;
-  const cells = 25;
-  const cell = size / cells;
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, size, size);
-  ctx.fillStyle = "#000000";
-  const seed = Array.from(location.href).reduce((sum, char) => sum + char.charCodeAt(0), 0);
-
-  drawFinder(ctx, 0, 0, cell);
-  drawFinder(ctx, 18, 0, cell);
-  drawFinder(ctx, 0, 18, cell);
-
-  for (let y = 0; y < cells; y += 1) {
-    for (let x = 0; x < cells; x += 1) {
-      const inFinder = (x < 8 && y < 8) || (x > 16 && y < 8) || (x < 8 && y > 16);
-      if (inFinder) continue;
-      if (((x * 17 + y * 31 + seed) % 7) < 3) {
-        ctx.fillRect(Math.round(x * cell), Math.round(y * cell), Math.ceil(cell), Math.ceil(cell));
-      }
-    }
+  if (!box || !targetUrl) return;
+  const image = document.createElement("img");
+  image.className = "desktop-qr-image";
+  image.width = 110;
+  image.height = 110;
+  image.alt = "手机扫码预览二维码";
+  image.decoding = "async";
+  image.loading = "eager";
+  image.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&format=svg&data=${encodeURIComponent(targetUrl)}`;
+  if (canvas) {
+    canvas.replaceWith(image);
+    return;
   }
-}
-
-function drawFinder(ctx, x, y, cell) {
-  ctx.fillRect(Math.round(x * cell), Math.round(y * cell), Math.round(cell * 7), Math.round(cell * 7));
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(Math.round((x + 1) * cell), Math.round((y + 1) * cell), Math.round(cell * 5), Math.round(cell * 5));
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(Math.round((x + 2) * cell), Math.round((y + 2) * cell), Math.round(cell * 3), Math.round(cell * 3));
+  box.querySelector(".desktop-qr-image")?.replaceWith(image);
 }
 
 function setMeta() {
