@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>你们为什么总是说着说着就变了？</title>
+  <meta name="description" content="40道题目 · 约4分钟 · 生成专属沟通卡点报告">
+  <meta property="og:title" content="你们为什么总是说着说着就变了？">
+  <meta property="og:description" content="40道题目 · 约4分钟 · 生成专属沟通卡点报告">
+  <script>
+    if (new URLSearchParams(location.search).has("mobile")) {
+      document.documentElement.classList.add("mobile-preview");
+    }
+  </script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="desktop-gate" aria-label="手机扫码预览">
+    <section class="desktop-qr-card">
+      <div class="desktop-qr-title">
+        <span class="desktop-qr-icon" aria-hidden="true"></span>
+        <span>手机扫码预览</span>
+      </div>
+      <div class="desktop-qr-box">
+        <canvas class="desktop-qr-canvas" width="110" height="110" aria-hidden="true"></canvas>
+      </div>
+    </section>
+    <div class="desktop-phone-frame" aria-label="手机端页面预览">
+      <iframe class="desktop-preview-frame" title="手机端页面预览" data-desktop-preview></iframe>
+    </div>
+  </div>
+  <main id="app" class="app" aria-live="polite"></main>
+  <script src="./content.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
